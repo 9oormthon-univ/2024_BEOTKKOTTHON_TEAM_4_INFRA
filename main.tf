@@ -16,4 +16,7 @@ module "vpc" {
 
 module "ecs" {
   source = "./ecs"
+  vpc_id = module.vpc.vpc_id
+  private_subnet_cidr_blocks = module.vpc.private_subnet_cidr_blocks
+  private_vpc_zone_ids = module.vpc.private_vpc_zone_ids
 }
