@@ -1,9 +1,14 @@
-resource "aws_ecs_cluster" "vacgom-cluster" {
-  name = "vacgom-cluster-terraform"
+resource "aws_ecs_cluster" "vacgom-cluster-2" {
+  name = "vacgom-cluster-2"
+
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
 }
 
 resource "aws_ecs_capacity_provider" "vacgom-capacity-provider" {
-  depends_on = [aws_autoscaling_group.ecs-ec2-asg]
+  depends_on = [aws_ecs_cluster.vacgom-cluster-2, aws_autoscaling_group.ecs-ec2-asg]
 
   name = "vacgom-capacity-provider"
 
@@ -18,8 +23,9 @@ resource "aws_ecs_capacity_provider" "vacgom-capacity-provider" {
 }
 
 resource "aws_ecs_cluster_capacity_providers" "vacgom-cluster-capacity-providers" {
-  depends_on = [aws_ecs_capacity_provider.vacgom-capacity-provider, aws_ecs_cluster.vacgom-cluster]
-  cluster_name = aws_ecs_cluster.vacgom-cluster.name
+  depends_on = [aws_ecs_capacity_provider.vacgom-capacity-provider]
+
+  cluster_name = aws_ecs_cluster.vacgom-cluster-2.name
 
   capacity_providers = [aws_ecs_capacity_provider.vacgom-capacity-provider.name]
 }

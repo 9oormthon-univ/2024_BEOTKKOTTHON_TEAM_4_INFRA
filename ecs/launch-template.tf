@@ -23,7 +23,7 @@ resource "aws_launch_template" "ecs-ec2" {
   user_data = base64encode(
     <<-EOF
     #!/bin/bash
-    echo ECS_CLUSTER=${aws_ecs_cluster.vacgom-cluster.name} >> /etc/ecs/ecs.config;
+    echo ECS_CLUSTER=${aws_ecs_cluster.vacgom-cluster-2.name} >> /etc/ecs/ecs.config;
   EOF
   )
 }

@@ -9,3 +9,7 @@ output "private_subnet_cidr_blocks" {
 output "private_vpc_zone_ids" {
   value = module.vpc.private_subnets
 }
+
+output "public_subnet_ids" {
+    value = module.vpc.public_subnets
+}
