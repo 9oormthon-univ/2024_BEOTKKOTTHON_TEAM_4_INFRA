@@ -1,8 +1,11 @@
 resource "aws_ecs_task_definition" "vacgom-taskdef" {
     family                = "vacgom-taskdef"
     requires_compatibilities = ["EC2"]
-    cpu = "1 vCPU"
+    cpu = "1024"
     memory = "800"
+    tags = {
+      Name = "vacgom-taskdef"
+    }
     task_role_arn = aws_iam_role.vacgom-task-execution-role.arn
     container_definitions = jsonencode([
       {
@@ -19,6 +22,10 @@ resource "aws_ecs_task_definition" "vacgom-taskdef" {
             appProtocol = "http"
           }
         ],
+        environment = [],
+        mountPoints = [],
+        volumesFrom = [],
+        systemControls = []
       }
     ])
 }

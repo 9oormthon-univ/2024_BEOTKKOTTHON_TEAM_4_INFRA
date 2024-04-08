@@ -36,7 +36,6 @@ resource "aws_security_group" "nat-instance-sg" {
 
 resource "aws_network_interface" "nat-nic" {
   subnet_id = module.vpc.public_subnets[0]
-  private_ip = "10.0.101.1"
 
   security_groups = [aws_security_group.nat-instance-sg.id]
 
