@@ -1,5 +1,6 @@
 resource "aws_ecs_task_definition" "vacgom-taskdef" {
     family                = "vacgom-taskdef"
+    track_latest = true
     requires_compatibilities = ["EC2"]
     cpu = "1024"
     memory = "800"
@@ -7,6 +8,7 @@ resource "aws_ecs_task_definition" "vacgom-taskdef" {
       Name = "vacgom-taskdef"
     }
     task_role_arn = aws_iam_role.vacgom-task-execution-role.arn
+
     container_definitions = jsonencode([
       {
         name = "vacgom-backend",
