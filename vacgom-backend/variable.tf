@@ -18,5 +18,11 @@ variable "vacgom-alb-id" {
   type = string
 }
 
+variable "private-subnet-ids" {
+    type = list(string)
+}
 
+variable "private-cidr-groups" {
+    type = list(string)
+}
 

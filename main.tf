@@ -2,6 +2,7 @@ terraform {
   required_providers {
     aws = {
       source = "hashicorp/aws"
+      version = ">= 5.30.0"
     }
   }
 }
@@ -31,4 +32,7 @@ module "vacgom-backend" {
   vacgom-capacity-provider-id = module.ecs.vacgom_capacity_provider_id
   vacgom-alb-id = module.ecs.alb_id
   vpc-id = module.vpc.vpc_id
+
+  private-cidr-groups = module.vpc.private_subnet_cidr_blocks
+  private-subnet-ids = module.vpc.private_vpc_zone_ids
 }
