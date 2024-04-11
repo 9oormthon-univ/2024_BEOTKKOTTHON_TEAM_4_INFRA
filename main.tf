@@ -35,4 +35,6 @@ module "vacgom-backend" {
 
   private-cidr-groups = module.vpc.private_subnet_cidr_blocks
   private-subnet-ids = module.vpc.private_vpc_zone_ids
+
+  vacgom-db-password = var.vacgom-db-password
 }

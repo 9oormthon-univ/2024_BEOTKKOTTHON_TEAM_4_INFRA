@@ -26,3 +26,7 @@ variable "private-cidr-groups" {
     type = list(string)
 }
 
+variable "vacgom-db-password" {
+    type = string
+}
+
