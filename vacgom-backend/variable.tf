@@ -19,14 +19,21 @@ variable "vacgom-alb-id" {
 }
 
 variable "private-subnet-ids" {
-    type = list(string)
+  type = list(string)
 }
 
 variable "private-cidr-groups" {
-    type = list(string)
+  type = list(string)
 }
 
 variable "vacgom-db-password" {
-    type = string
+  type = string
 }
 
+variable "vacgom-domain" {
+  type = string
+}
+
+variable "vacgom-zone" {
+  type = string
+}

@@ -5,3 +5,12 @@ variable "vacgom-container-image" {
 variable "vacgom-db-password" {
   type = string
 }
+
+variable "vacgom-domain" {
+  type = string
+}
+
+
+variable "vacgom-zone" {
+  type = string
+}
