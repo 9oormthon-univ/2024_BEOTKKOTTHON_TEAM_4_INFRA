@@ -38,3 +38,28 @@ resource "aws_secretsmanager_secret_version" "vacgom-db-password" {
   secret_id     = aws_secretsmanager_secret.vacgom-db-password.id
   secret_string = var.vacgom-db-password
 }
+
+data "aws_iam_policy_document" "vacgom-db-policy" {
+  statement {
+    actions = [
+      "secretsmanager:GetSecretValue",
+    ]
+
+    resources = [
+      aws_secretsmanager_secret.vacgom-db-password.id
+    ]
+  }
+
+}
+
+resource "aws_iam_policy" "vacgom-db-policy" {
+  name        = "vacgom-secret-policy"
+  description = "Allow vacgom ecs task to access vacgom secret"
+  policy      = data.aws_iam_policy_document.vacgom-db-policy.json
+
+}
+
+resource "aws_iam_role_policy_attachment" "vacgom-db-policy" {
+  policy_arn = aws_iam_policy.vacgom-db-policy.arn
+  role       = aws_iam_role.vacgom-task-execution-role.id
+}
