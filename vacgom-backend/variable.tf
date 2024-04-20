@@ -37,3 +37,7 @@ variable "vacgom-domain" {
 variable "vacgom-zone" {
   type = string
 }
+
+variable "public-cidr-groups" {
+  type = list(string)
+}

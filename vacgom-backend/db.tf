@@ -10,7 +10,7 @@ resource "aws_security_group" "vacgom-db-sg" {
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
-    cidr_blocks = var.private-cidr-groups
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
