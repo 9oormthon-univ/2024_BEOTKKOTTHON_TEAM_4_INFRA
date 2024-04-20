@@ -1,3 +1,7 @@
+resource "aws_cloudwatch_log_group" "vacgom-logs" {
+  name = "vacgom-log"
+}
+
 resource "aws_ecs_task_definition" "vacgom-taskdef" {
   depends_on = [aws_db_instance.vacgom-db]
 
@@ -27,7 +31,16 @@ resource "aws_ecs_task_definition" "vacgom-taskdef" {
           appProtocol   = "http"
         }
       ],
-      environment    = [],
+      environment = [
+        {
+          name  = "SPRING_DATASOURCE_URL"
+          value = "jdbc:mysql://${aws_db_instance.vacgom-db.address}:${aws_db_instance.vacgom-db.port}/vacgom?serverTimezone=UTC&useSSL=false"
+        },
+        {
+          name  = "SPRING_DATASOURCE_USERNAME"
+          value = "admin"
+        }
+      ],
       mountPoints    = [],
       volumesFrom    = [],
       systemControls = [],
@@ -37,6 +50,14 @@ resource "aws_ecs_task_definition" "vacgom-taskdef" {
           valueFrom = aws_secretsmanager_secret_version.vacgom-db-password.arn
         }
       ],
+      logConfiguration = {
+        logDriver = "awslogs",
+        options   = {
+          "awslogs-group"         = aws_cloudwatch_log_group.vacgom-logs.name
+          "awslogs-region"        = "ap-northeast-2"
+          "awslogs-stream-prefix" = "vacgom-backend"
+        }
+      }
     }
   ])
 }
