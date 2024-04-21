@@ -11,6 +11,11 @@ provider "aws" {
   region = "ap-northeast-2"
 }
 
+provider "aws" {
+  alias  = "us-east-1"
+  region = "us-east-1"
+}
+
 module "vpc" {
   source = "./vpc"
 }
@@ -40,4 +45,14 @@ module "vacgom-backend" {
   vacgom-db-password = var.vacgom-db-password
   vacgom-domain      = var.vacgom-domain
   vacgom-zone        = var.vacgom-zone
+}
+
+module "s3" {
+  source        = "./s3"
+  vacgom-zone   = var.vacgom-zone
+  vacgom-domain = var.vacgom-domain
+  providers     = {
+    aws           = aws
+    aws.us-east-1 = aws.us-east-1
+  }
 }
