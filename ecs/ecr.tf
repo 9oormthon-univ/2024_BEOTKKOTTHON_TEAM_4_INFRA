@@ -1,6 +1,6 @@
 resource "aws_ecr_repository" "vacgom-ecr" {
-  name = "vacgom-ecr"
-  image_tag_mutability = "IMMUTABLE"
+  name                 = "vacgom-ecr"
+  image_tag_mutability = "MUTABLE"
 }
 
 resource "aws_ecr_lifecycle_policy" "vacgom-ecr-policy" {
