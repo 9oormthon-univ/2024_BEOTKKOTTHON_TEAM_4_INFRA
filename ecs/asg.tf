@@ -5,7 +5,6 @@ resource "aws_autoscaling_group" "ecs-ec2-asg" {
   vpc_zone_identifier   = var.private_vpc_zone_ids
   min_size              = 0
   max_size              = 3
-  desired_capacity      = 0
   desired_capacity_type = "units"
 
   mixed_instances_policy {

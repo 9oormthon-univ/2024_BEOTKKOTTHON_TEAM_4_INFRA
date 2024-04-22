@@ -85,7 +85,7 @@ resource "aws_cloudfront_distribution" "vacgom-distribution" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true
+    cloudfront_default_certificate = false
     acm_certificate_arn            = data.aws_acm_certificate.vacgom-cert.id
     ssl_support_method             = "sni-only"
   }
@@ -104,8 +104,12 @@ resource "aws_route53_record" "s3-record" {
 }
 
 
-resource "aws_route53_record" "s3-route" {
+data "aws_route53_zone" "vacgom-zone" {
   zone_id = var.vacgom-zone
+}
+
+resource "aws_route53_record" "s3-route" {
+  zone_id = data.aws_route53_zone.vacgom-zone.id
   name    = "images.${var.vacgom-zone}"
   type    = "CNAME"
   ttl     = 300
