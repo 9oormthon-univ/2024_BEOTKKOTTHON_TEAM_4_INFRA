@@ -11,9 +11,8 @@ provider "aws" {
   region = "ap-northeast-2"
 }
 
-provider "aws" {
-  alias  = "us-east-1"
-  region = "us-east-1"
+data "aws_route53_zone" "vacgom-zone" {
+  name = var.vacgom-zone
 }
 
 module "vpc" {
@@ -49,10 +48,6 @@ module "vacgom-backend" {
 
 module "s3" {
   source        = "./s3"
-  vacgom-zone   = var.vacgom-zone
+  vacgom-zone   = data.aws_route53_zone.vacgom-zone.id
   vacgom-domain = var.vacgom-domain
-  providers     = {
-    aws           = aws
-    aws.us-east-1 = aws.us-east-1
-  }
 }

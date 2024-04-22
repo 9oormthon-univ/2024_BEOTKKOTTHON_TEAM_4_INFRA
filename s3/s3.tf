@@ -1,3 +1,9 @@
+provider "aws" {
+  region = "us-east-1"
+  alias  = "us-east-1"
+}
+
+
 resource "aws_cloudfront_origin_access_identity" "oai" {
 }
 
@@ -33,7 +39,8 @@ resource "aws_s3_bucket_policy" "vacgom-policy" {
 
 
 data "aws_acm_certificate" "vacgom-cert" {
-  domain   = var.vacgom-domain
+  domain = var.vacgom-domain
+
   provider = aws.us-east-1
 }
 
@@ -96,18 +103,11 @@ resource "aws_route53_record" "s3-record" {
   }
 }
 
-data "aws_route53_zone" "vacgom-zone" {
-  name = var.vacgom-zone
-
-  provider = aws
-}
 
 resource "aws_route53_record" "s3-route" {
-  zone_id = data.aws_route53_zone.vacgom-zone.id
+  zone_id = var.vacgom-zone
   name    = "images.${var.vacgom-zone}"
   type    = "CNAME"
   ttl     = 300
   records = [aws_cloudfront_distribution.vacgom-distribution.domain_name]
-
-  provider = aws
 }
