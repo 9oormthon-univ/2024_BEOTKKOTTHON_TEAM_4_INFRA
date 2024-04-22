@@ -5,7 +5,7 @@ resource "aws_lb_target_group" "vacgom-target-group" {
   vpc_id   = var.vpc-id
 
   health_check {
-    path     = "/"
+    path     = "/actuator/health"
     protocol = "HTTP"
     timeout  = 5
     interval = 30
