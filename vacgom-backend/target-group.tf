@@ -59,7 +59,7 @@ data "aws_lb" "vacgom-alb" {
 
 resource "aws_route53_record" "vacgom-route" {
   zone_id = data.aws_route53_zone.vacgom-zone.id
-  name    = "api-test.${var.vacgom-zone}"
+  name    = "api-dev.${var.vacgom-zone}"
   type    = "CNAME"
   ttl     = 300
   records = [data.aws_lb.vacgom-alb.dns_name]
