@@ -8,8 +8,8 @@ resource "aws_ecs_task_definition" "vacgom-taskdef" {
   family                   = "vacgom-taskdef"
   track_latest             = true
   requires_compatibilities = ["EC2"]
-  cpu                      = "1024"
-  memory                   = "800"
+  cpu                      = "2048"
+  memory                   = "3500"
   tags                     = {
     Name = "vacgom-taskdef"
   }
@@ -18,10 +18,11 @@ resource "aws_ecs_task_definition" "vacgom-taskdef" {
 
   container_definitions = jsonencode([
     {
-      name         = "vacgom-backend",
-      image        = var.vacgom-container-image,
-      cpu          = 1,
-      memory       = 800,
+      name   = "vacgom-backend",
+      image  = var.vacgom-container-image,
+      cpu    = 2048,
+      memory = 3000,
+
       essential    = true,
       portMappings = [
         {

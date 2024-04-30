@@ -21,11 +21,6 @@ resource "aws_autoscaling_group" "ecs-ec2-asg" {
       }
 
       override {
-        instance_type     = "t2.micro"
-        weighted_capacity = "2"
-      }
-
-      override {
         instance_type     = "t2.medium"
         weighted_capacity = "1"
       }
